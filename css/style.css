@@ -1,0 +1,106 @@
+body {
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    background-color: hsl(204, 12%, 22%);
+    font-family: 'Lato', sans-serif;
+    cursor: progress;
+    visibility: hidden;
+}
+
+#gradient {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(hsl(204, 8%, 14%), hsl(200, 22%, 42%));
+    visibility: visible;
+    z-index: 0;
+    display: block;
+}
+
+#container {
+    position: absolute;
+    bottom: 0px;
+    left: -60%;
+    right: 0px;
+    top: -60%;
+    z-index: 1;
+    display: block;
+}
+
+#title {
+    position: absolute;
+    top: 2px;
+    width: 100%;
+    color: hsl(0, 0%, 100%);
+    font-size: 5vh;
+    text-align: center;
+    z-index: 100;
+    display: block;
+}
+
+#graph {
+    position: absolute;
+    right: 0px;
+    top: 60px;
+    width: 30%;
+    height: 44.5%;
+    border-color: hsl(204, 10%, 50%);
+    border-style: dotted;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-right-width: 0px;
+    border-top-width: 2px;
+    text-align: center;
+    z-index: 99;
+    display: block;
+}
+
+#graph-text {
+    position: absolute;
+    right: 0px;
+    top: 60px;
+    width: 30%;
+    padding-left: 6px;
+    padding-top: 2px;
+    color: hsl(204, 10%, 50%);
+    font-size: 2vh;
+    z-index: 100;
+    display: block;
+}
+
+#slider {
+    position: absolute;
+    bottom: -28px;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    z-index: 100;
+    display: table-cell;
+}
+
+#play-pause-btn {
+    background-color: hsl(204, 40%, 80%);
+    color: hsl(0, 0%, 0%);
+    margin-bottom: 40px;
+    padding-left: 16px;
+    padding-right: 14px;
+}
+
+#play-pause-btn:active {
+    background-color: hsl(0, 0%, 100%);
+}
+
+.links {
+    stroke: hsl(204, 40%, 80%);
+    stroke-width: 1px;
+}
+
+.nodes {
+    cursor: move;
+    fill: hsl(50, 65%, 75%);
+}
