@@ -1,34 +1,9 @@
-var camera, renderer, scene, slider, points, blur, focus, anim_play,
+var camera, renderer, scene, slider, points, blur, focus, anim_play,nodeDiagram,
     steps = [2.305, 2.3075, 2.31, 2.3135, 2.315, 2.3175, 2.32,
         2.3225, 2.325, 2.3275, 2.33, 2.3325, 2.335, 2.3375,
         2.34, 2.3425, 2.345, 2.3475, 2.35, 2.355, 2.36,
         2.365, 2.37, 2.375, 2.38, 2.385, 2.39, 2.395, 2.4],
-    timeouts = [],
-    nodes = [{ id: 'mammal' },
-    { id: 'dog' },
-    { id: 'cat' },
-    { id: 'fox' },
-    { id: 'elk' },
-    { id: 'insect' },
-    { id: 'ant' },
-    { id: 'bee' },
-    { id: 'fish' },
-    { id: 'carp' },
-    { id: 'pike' }],
-    links = [{ target: 'mammal', source: 'dog', strength: 0.5 },
-    { target: 'mammal', source: 'cat', strength: 0.5 },
-    { target: 'mammal', source: 'fox', strength: 0.5 },
-    { target: 'mammal', source: 'elk', strength: 0.5 },
-    { target: 'insect', source: 'ant', strength: 0.5 },
-    { target: 'insect', source: 'bee', strength: 0.5 },
-    { target: 'fish', source: 'carp', strength: 0.5 },
-    { target: 'fish', source: 'pike', strength: 0.5 },
-    { target: 'cat', source: 'elk', strength: 0.1 },
-    { target: 'carp', source: 'ant', strength: 0.1 },
-    { target: 'elk', source: 'bee', strength: 0.1 },
-    { target: 'dog', source: 'cat', strength: 0.1 },
-    { target: 'fox', source: 'ant', strength: 0.1 },
-    { target: 'pike', source: 'cat', strength: 0.1 }];
+    timeouts = []
 
 init();
 
@@ -43,6 +18,7 @@ function init() {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth * 1.6, window.innerHeight * 1.6);
     document.getElementById('container').appendChild(renderer.domElement);
+    console.log(document.getElementById('container').appendChild(renderer.domElement))
     cursors(renderer.domElement);
 
     // Controls
@@ -66,69 +42,9 @@ function init() {
     scene.add(fillLight);
     scene.add(backLight);
 
-    // Graph
-    let graph = d3.select('#graph').append('svg')
-        .attr('width', window.innerWidth * 0.3)
-        .attr('height', window.innerHeight * 0.44);
-
-    let forceLink = d3.forceLink()
-        .id(link => { return link.id; })
-        .strength(link => { return link.strength; });
-
-    let forceSimulation = d3.forceSimulation()
-        .force('link', forceLink)
-        .force('charge', d3.forceManyBody().strength(-120))
-        .force('center', d3.forceCenter(window.innerWidth * 0.15, window.innerHeight * 0.22));
-
-    let drag = d3.drag()
-        .on('start', dragstart)
-        .on('drag', node => {
-            forceSimulation.alphaTarget(0.7).restart();
-            node.fx = d3.event.x;
-            node.fy = d3.event.y;
-        });
-
-    function dragstart(node) {
-        node.fx = node.x;
-        node.fy = node.y;
-        d3.select(this).style('fill', 'hsl(350, 71%, 86%)');
-    }
-
-    function dblclick(node) {
-        if (!d3.event.active)
-            forceSimulation.alphaTarget(0);
-        node.fx = null;
-        node.fy = null;
-        d3.select(this).style('fill', 'hsl(50, 65%, 75%)');
-    }
-
-    forceSimulation.nodes(nodes).on('tick', () => {
-        nodeElements
-            .attr('cx', node => { return node.x; })
-            .attr('cy', node => { return node.y; });
-        linkElements
-            .attr('x1', link => { return link.source.x; })
-            .attr('y1', link => { return link.source.y; })
-            .attr('x2', link => { return link.target.x; })
-            .attr('y2', link => { return link.target.y; });
-    });
-
-    let linkElements = graph.append('g')
-        .attr('class', 'links')
-        .selectAll('line')
-        .data(links)
-        .enter().append('line');
-
-    let nodeElements = graph.append('g')
-        .attr('class', 'nodes')
-        .selectAll('circle')
-        .data(nodes)
-        .enter().append('circle')
-        .attr('r', 12)
-        .on('dblclick', dblclick)
-        .call(drag);
-
-    setTimeout(forceSimulation.force('link').links, 400, links);
+    // node-link graph
+    nodeDiagram = new nodeLink();
+    nodeDiagram.createView();
 
     // Slider
     let width = (window.innerWidth < 960) ? 480 : (window.innerWidth / 2)
