@@ -1,2 +1,0 @@
-# High Performance Contrails Visualization
- 

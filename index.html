@@ -1,33 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>Nozzle with Particles Data</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High Performance Contrail</title>
 
-    <link href='https://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet'>
-    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css' rel='stylesheet'>
-    <link href='css/style.css' rel='stylesheet'>
+    <!-- css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
 
-    <script src='lib/d3.min.js'></script>
+    <!-- js libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src='lib/d3-simple-slider.min.js'></script>
     <script src='lib/three.min.js'></script>
     <script src='lib/MTLLoader.js'></script>
     <script src='lib/OBJLoader.js'></script>
     <script src='lib/OrbitControls.js'></script>
 
-    <script src='js/node-link.js'></script>
-    <!-- <script src='js/script.js'></script> -->
+    <!-- js sources -->
+    <script src="js/scene.js"></script>
+    <script src="js/particleSystem.js"></script>
+    <script src="js/main.js"></script>
+
+
 
     
 </head>
-<body>
-    <div id='gradient'></div>
-    <div id='container'></div>
-    <div id='title'>Nozzle with Particles Data</div>
-    <div id='graph'></div>
-    <div id='graph-text'>Simulations</div>
-    <div id='slider'><button id='play-pause-btn' class='btn btn-lg'><span id='play-pause glyphicon' class='glyphicon glyphicon-play'></span></div>
-    <script src='js/script.js'></script>
+<body onload="App.start();">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="particleDiv col-md-6">
+                <div id="scene"></div>
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
