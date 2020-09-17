@@ -1,0 +1,11 @@
+t - temperature
+u - velocity
+y - partial ratio of the specific thing
+uTurb - 
+ygas- not injecting any gas / solid
+ignoring the fact of the flow of the particles
+ysolid - 
+
+d- diameter
+
+uTurb - 

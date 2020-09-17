@@ -18,7 +18,8 @@ var App = App || {};
 
         // initialize the particle system
         const particleSystem = new ParticleSystem();
-        particleSystem.initialize('data/058.csv');
+        particleSystem.drawNozzle()
+        particleSystem.initialize('particles/2.31.csv');
 
         //add the particle system to the scene
         App.scene.addObject( particleSystem.getParticleSystems());

@@ -7,100 +7,77 @@ var App = App || {};
 const ParticleSystem = function() {
 
     // setup the pointer to the scope 'this' variable
-    const self = this;
-
-    // data container
-    const data = [];
-
-    // scene graph group for the particle system
-    const sceneObject = new THREE.Group();
-
-    // bounds of the data
-    const bounds = {};
+    const self = {
+        data : [], //data container
+        sceneObject : new THREE.Group(), //scene graph group for the particle system
+        bounds : {} //bounds of the data
+    }
 
     // create the containment box.
     // This cylinder is only to guide development.
     // TODO: Remove after the data has been rendered
-    self.drawContainment = function() {
-
-        // get the radius and height based on the data bounds
-        const radius = (bounds.maxX - bounds.minX)/2.0 + 1;
-        const height = (bounds.maxY - bounds.minY) + 1;
-
-        // create a cylinder to contain the particle system
-        const geometry = new THREE.CylinderGeometry( radius, radius, height, 32 );
-        const material = new THREE.MeshBasicMaterial( {color: 0xffff00, wireframe: true} );
-        const cylinder = new THREE.Mesh( geometry, material );
-
-        // add the containment to the scene
-        sceneObject.add(cylinder);
-    };
+    function drawNozzle() {
+        
+    }
 
     // creates the particle system
-    self.createParticleSystem = function() {
-
-        // use self.data to create the particle system
-        // draw your particle system here!
+    function createParticleSystem () {
+        // console.log(self.data)
+        let particles = new THREE.Geometry();
+        self.data.forEach(d => particles.vertices.push(new THREE.Vector3(d.x, d.y, d.z)));
+        // if (points) scene.remove(points);
+        let points = new THREE.Points(particles, new THREE.PointsMaterial({ size: 0.2, color: 'hsl(50, 65%, 75%)' }));
+        // console.log(points)
+        self.sceneObject.add(points);    
         
+        setTimeout((pass => {
+            if (pass < 3) {
+                if (true) {
+                    document.body.style.cursor = 'default';
+                    document.body.style.visibility = 'visible';
+                }
+                App.scene.render();
+                setTimeout(arguments.callee, 500, pass + 1);
+            }
+        }), 500, 0);
     };
 
     // data loading function
-    self.loadData = function(file){
+    function loadData(file){
 
-        // read the csv file
-        d3.csv(file)
-        // iterate over the rows of the csv file
-            .row(function(d) {
 
-                // get the min bounds
-                bounds.minX = Math.min(bounds.minX || Infinity, d.Points0);
-                bounds.minY = Math.min(bounds.minY || Infinity, d.Points1);
-                bounds.minZ = Math.min(bounds.minZ || Infinity, d.Points2);
+        d3.csv(file, data => {
+            self.data.push({
+                // concentration density
+                // concentration: Number(d.concentration),
+                // Position
+                x: parseFloat(data['Points:0']),
+                y: parseFloat(data['Points:1']),
+                z: parseFloat(data['Points:2'])
 
-                // get the max bounds
-                bounds.maxX = Math.max(bounds.maxX || -Infinity, d.Points0);
-                bounds.maxY = Math.max(bounds.maxY || -Infinity, d.Points1);
-                bounds.maxZ = Math.max(bounds.maxY || -Infinity, d.Points2);
-
-                // add the element to the data collection
-                data.push({
-                    // concentration density
-                    concentration: Number(d.concentration),
-                    // Position
-                    X: Number(d.Points0),
-                    Y: Number(d.Points1),
-                    Z: Number(d.Points2),
-                    // Velocity
-                    U: Number(d.velocity0),
-                    V: Number(d.velocity1),
-                    W: Number(d.velocity2)
-                });
-            })
-            // when done loading
-            .get(function() {
-                // draw the containment cylinder
-                // TODO: Remove after the data has been rendered
-                self.drawContainment();
-
-                // create the particle system
-                self.createParticleSystem();
             });
+        }).then(function() {
+            createParticleSystem();
+            
+        });
     };
 
-    // publicly available functions
-    self.public = {
+    // load the data and setup the system
+    function initialize(file){
+        loadData(file);
+    }
 
-        // load the data and setup the system
-        initialize: function(file){
-            self.loadData(file);
-        },
+    // accessor for the particle system
+    function getParticleSystems() {
+        return self.sceneObject;
+    }
 
-        // accessor for the particle system
-        getParticleSystems : function() {
-            return sceneObject;
-        }
-    };
+    return{
+        drawNozzle,
+        createParticleSystem,
+        initialize,
+        getParticleSystems
 
-    return self.public;
+    }
 
 };

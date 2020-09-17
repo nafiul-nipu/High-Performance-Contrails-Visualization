@@ -13,38 +13,44 @@ const Scene = function(options){
     }
 
     function init(){
-        // scale the width and height to the screen size
-        const width = d3.select('.particleDiv').node().clientWidth;
-        const height = width * 0.85;
+        const canvas = document.querySelector("#scene");
+        self.renderer = new THREE.WebGLRenderer({canvas});
 
-        // create the scene
+        //camera
+        const fieldOfView = 1;
+        const aspect = window.innerWidth / window.innerHeight;
+        const near = 1;
+        const far = 1000;
+
+        self.camera = new THREE.PerspectiveCamera(fieldOfView, aspect, near, far);
+        self.camera.position.z = 2;
+
+        //scene
         self.scene = new THREE.Scene();
 
-        // setup the camera
-        self.camera = new THREE.PerspectiveCamera( 75, width / height, 0.1, 1000 );
-        self.camera.position.set(0,2,20);
-        self.camera.lookAt(0,0,0);
 
-        // Add a directional light to show off the objects
-        const light = new THREE.DirectionalLight( 0xffffff, 1.5);
-        // Position the light out from the scene, pointing at the origin
-        light.position.set(0,2,20);
-        light.lookAt(0,0,0);
+        //gui control
+        const gui = new dat.GUI();
+        gui.add(self.camera, 'near', 1, 2);
+        gui.add(self.camera, 'far', 1, 1000);
+        gui.add(self.camera, 'fov', 1, 100);
 
-        // add the light to the camera and the camera to the scene
-        self.camera.add(light);
-        self.scene.add(self.camera);
+        // directional light
+        const color = 0xFFFFFF;
+        const intensity = 1;
+        const light = new THREE.DirectionalLight(color, intensity);
+        light.position.set(-1,2,4);
+        self.scene.add(light)
 
-        // create the renderer
-        self.renderer = new THREE.WebGLRenderer();
-
-        // set the size and append it to the document
-        self.renderer.setSize( width, height );
-        document.getElementById(options.container).appendChild( self.renderer.domElement );
-
+        // self.renderer.render()
+        
     }
 
     function resize(){
+        // camera.aspect = (window.innerWidth * 1.6) / (window.innerHeight * 1.6);
+        // camera.updateProjectionMatrix();
+        // renderer.setSize(window.innerWidth * 1.6, window.innerHeight * 1.6);
+        // render();
 
     }
 
@@ -53,8 +59,7 @@ const Scene = function(options){
     }
 
     function render(){
-        requestAnimationFrame(render );
-        self.renderer.render( self.scene, self.camera );
+        self.renderer.render(self.scene, self.camera);
     }
 
     return{

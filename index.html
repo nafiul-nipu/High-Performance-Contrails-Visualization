@@ -18,12 +18,13 @@
     <link rel="stylesheet" href="css/style.css">
 
     <!-- js libraries -->
-    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src='lib/d3-simple-slider.min.js'></script>
     <script src='lib/three.min.js'></script>
     <script src='lib/MTLLoader.js'></script>
     <script src='lib/OBJLoader.js'></script>
     <script src='lib/OrbitControls.js'></script>
+    <script src="lib/dat.gui.min.js"></script>
 
     
 
@@ -33,7 +34,7 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="container">
+        <div class="container top">
             <div class="row">
               <div class="col">
                 <h2>Contrail Visualization</h2>
@@ -59,10 +60,11 @@
                   </a>
               </div>
             </div>
-          </div>
-        <div class="row">
-            <div class="particleDiv col-md-6">
-                <div id="scene"></div>>
+        </div>
+
+        <div class="row bottom">
+            <div class="container" id="canvas_container">
+                <canvas id="scene"></canvas>
             </div>
         </div>
     </div>
