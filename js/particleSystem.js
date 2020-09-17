@@ -28,18 +28,8 @@ const ParticleSystem = function() {
         // if (points) scene.remove(points);
         let points = new THREE.Points(particles, new THREE.PointsMaterial({ size: 0.2, color: 'hsl(50, 65%, 75%)' }));
         // console.log(points)
-        self.sceneObject.add(points);    
-        
-        setTimeout((pass => {
-            if (pass < 3) {
-                if (true) {
-                    document.body.style.cursor = 'default';
-                    document.body.style.visibility = 'visible';
-                }
-                App.scene.render();
-                setTimeout(arguments.callee, 500, pass + 1);
-            }
-        }), 500, 0);
+        self.sceneObject.add(points);   
+        App.scene.render(); 
     };
 
     // data loading function
