@@ -14,6 +14,7 @@ var App = App || {};
     {
         // create a new scene, pass options as dictionary
         App.scene = new Scene({container:"scene"});
+        App.scene.init()
 
         // initialize the particle system
         const particleSystem = new ParticleSystem();
@@ -28,3 +29,12 @@ var App = App || {};
     };
 
 }) ();
+
+// App.start();
+
+// Using load manager to load the interface
+//for now window.onload
+//later swap with three js load manager??
+window.onload = function(){
+    App.start();
+}
