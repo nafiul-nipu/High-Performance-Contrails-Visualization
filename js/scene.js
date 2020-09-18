@@ -91,10 +91,14 @@ const Scene = function(options){
         self.renderer.render(self.scene, self.camera);
     }
 
+    function getScene(){
+        return self.scene;
+    }
     return{
         init,
         resize,
         addObject,
-        render
+        render,
+        getScene
     }
 }
