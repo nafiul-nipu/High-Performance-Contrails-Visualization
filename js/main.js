@@ -12,17 +12,21 @@ var App = App || {};
     /* Entry point of the application */
     App.start = function()
     {
+        //dropdown menu
+        App.timeStep = new TimeStepsController();
+        App.timeStep.init();
+        App.timeStep.changeController();
         // create a new scene, pass options as dictionary
         App.scene = new Scene({container:"scene"});
         App.scene.init()
 
         // initialize the particle system
-        const particleSystem = new ParticleSystem();
-        particleSystem.drawNozzle()
-        particleSystem.initialize('particles/2.31.csv');
+        App.particleSystem = new ParticleSystem();
+        App.particleSystem.drawNozzle()
+        App.particleSystem.initialize('particles/2.305.csv');
 
         //add the particle system to the scene
-        App.scene.addObject( particleSystem.getParticleSystems());
+        App.scene.addObject( App.particleSystem.getParticleSystems());
 
         // render the scene
         App.scene.render();
@@ -39,3 +43,7 @@ var App = App || {};
 window.onload = function(){
     App.start();
 }
+
+// window.addEventListener("resize", function(){
+//     App.start();
+// })

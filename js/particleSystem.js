@@ -1,4 +1,4 @@
-/* author: Andrew Burks */
+
 "use strict";
 
 /* Get or create the application global variable */
@@ -17,18 +17,34 @@ const ParticleSystem = function() {
     // This cylinder is only to guide development.
     // TODO: Remove after the data has been rendered
     function drawNozzle() {
+        let mtlLoader = new THREE.MTLLoader();
+        mtlLoader.setPath('models/');
+        mtlLoader.load('nozzle.mtl', mtls => {
+            mtls.preload();
+            let objLoader = new THREE.OBJLoader();
+            objLoader.setMaterials(mtls);
+            objLoader.setPath('models/');
+            objLoader.load('nozzle.obj', obj => {
+                obj.scale.set(20, 20, 20);
+                obj.position.set(-0.001, -0.0905, 0);
+                self.sceneObject.add(obj);
+            });
+        });
         
     }
 
     // creates the particle system
     function createParticleSystem () {
         // console.log(self.data)
+        // console.log(self.sceneObject.position)
+        self.sceneObject.position.set(-2,0,0)
         let particles = new THREE.Geometry();
         self.data.forEach(d => particles.vertices.push(new THREE.Vector3(d.x, d.y, d.z)));
         // if (points) scene.remove(points);
         let points = new THREE.Points(particles, new THREE.PointsMaterial({ size: 0.2, color: 'hsl(50, 65%, 75%)' }));
         // console.log(points)
-        self.sceneObject.add(points);   
+        points.name = "particleSystem";
+        self.sceneObject.add(points);  
         App.scene.render(); 
     };
 
