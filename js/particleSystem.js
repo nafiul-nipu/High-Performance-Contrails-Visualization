@@ -10,7 +10,7 @@ const ParticleSystem = function() {
     const self = {
         data : [], //data container
         sceneObject : new THREE.Group(), //scene graph group for the particle system
-        bounds : {} //bounds of the data
+        points : null
     }
 
     // create the containment box.
@@ -37,14 +37,20 @@ const ParticleSystem = function() {
     function createParticleSystem () {
         // console.log(self.data)
         // console.log(self.sceneObject.position)
+        // let points;
         self.sceneObject.position.set(-2,0,0)
         let particles = new THREE.Geometry();
         self.data.forEach(d => particles.vertices.push(new THREE.Vector3(d.x, d.y, d.z)));
-        // if (points) scene.remove(points);
-        let points = new THREE.Points(particles, new THREE.PointsMaterial({ size: 0.2, color: 'hsl(50, 65%, 75%)' }));
-        // console.log(points)
-        points.name = "particleSystem";
-        self.sceneObject.add(points);  
+        if (self.points){
+            // console.log(self.points)
+            // console.log(self.sceneObject)
+            self.sceneObject.remove(self.points);
+        }
+        self.points = new THREE.Points(particles, new THREE.PointsMaterial({ size: 0.2, color: 'hsl(50, 65%, 75%)' }));
+        console.log(self.points)
+        console.log(self.sceneObject.children)
+        // points.name = "particleSystem";
+        self.sceneObject.add(self.points);  
         App.scene.render(); 
     };
 

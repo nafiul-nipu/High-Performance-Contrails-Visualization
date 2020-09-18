@@ -38,11 +38,11 @@ const TimeStepsController = function(options){
     function selectChange(){
         // console.log(App.particleSystem)
         console.log("hello")
-        // let file = $("#timesteps").val();
+        let file = d3.format('.2f')($("#timesteps").val());
         // let sceneObject = App.particleSystem.getParticleSystems();
         // let removeParticles = sceneObject.getObjectByName('particleSystem');
         // sceneObject.remove(removeParticles);
-        // App.particleSystem.initialize('particles/'+ file +'.csv');
+        App.particleSystem.initialize('particles/'+ file +'.csv');
         // //add the particle system to the scene
         // App.scene.addObject(sceneObject);
 
