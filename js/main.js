@@ -15,21 +15,25 @@ var App = App || {};
         //dropdown menu
         App.timeStep = new TimeStepsController();
         App.timeStep.init();
-        App.timeStep.changeController();
         // create a new scene, pass options as dictionary
         App.scene = new Scene({container:"scene"});
         App.scene.init()
 
-        // initialize the particle system
+        // // initialize the particle system
         App.particleSystem = new ParticleSystem();
         App.particleSystem.drawNozzle()
-        App.particleSystem.initialize('particles/2.305.csv');
+        App.particleSystem.initialize('particles/2.3075.csv');
 
-        //add the particle system to the scene
+        // //add the particle system to the scene
         App.scene.addObject( App.particleSystem.getParticleSystems());
 
-        // render the scene
-        App.scene.render();
+        // // render the scene
+        // App.scene.render();
+
+        // App.contrails = new Contrails({container:"scene"})
+        // App.contrails.createScene();
+        // App.contrails.createNozzle();
+        // App.contrails.loadData('particles/2.305.csv')
 
     };
 

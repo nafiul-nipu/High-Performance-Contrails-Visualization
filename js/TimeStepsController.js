@@ -29,28 +29,45 @@ const TimeStepsController = function(options){
             .text(function(d){
                 return d;
             })
+
+        d3.select("#previous").on("click", previous);
+        d3.select("#next").on("click", next);
     }
 
-    function changeController(){
+    function previous(){
+        console.log("previous")
+        // let file ; 
+        // let value = d3.format('.2f')($("#timesteps").val());
+        // console.log(value)
+        // for(let i = 0; i < self.steps.length ; i++){
+        //     if(value == self.steps[i]){
+        //         if(i == self.steps.length - 1){ // last step
+        //             file = d3.format('.2f')(self.steps[0])
+        //             $("#timesteps").val(self.steps[0]);
+        //         }else if(i == 0){ // first step
+        //             file = d3.format('.2f')(self.steps[self.steps.length - 1]);
+        //             $("#timesteps").val(self.steps[self.steps.length - 1]);
+        //         }else{
+        //             file = d3.format('.2f')(self.steps[i - 1])
+        //             $("#timesteps").val(self.steps[i - 1]);
+        //         }
+        //     }
+        // }
+        // console.log(file)
         
+    }
+    function next(){
+        console.log("next")
     }
 
     function selectChange(){
         // console.log(App.particleSystem)
-        console.log("hello")
+        // console.log("hello")
         let file = d3.format('.2f')($("#timesteps").val());
-        // let sceneObject = App.particleSystem.getParticleSystems();
-        // let removeParticles = sceneObject.getObjectByName('particleSystem');
-        // sceneObject.remove(removeParticles);
-        App.particleSystem.initialize('particles/'+ file +'.csv');
-        // //add the particle system to the scene
-        // App.scene.addObject(sceneObject);
-
-        // // render the scene
-        // App.scene.render();
+        App.particleSystem.initialize('particles/'+ file +'.csv'); 
+        // App.contrails.loadData('particles/'+ file +'.csv')
     }
     return{
-        init,
-        changeController
+        init
     }
 }
