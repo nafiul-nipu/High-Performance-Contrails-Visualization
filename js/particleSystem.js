@@ -44,11 +44,16 @@ const ParticleSystem = function() {
         if(self.points){
             self.sceneObject.remove(self.points)
         }
-        let materials = new THREE.PointsMaterial({ size: 0.2, color: 'hsl(50, 65%, 75%)' });
+        let materials = new THREE.PointsMaterial({ size: 0.2, color: '#2ca25f' });
         self.points = new THREE.Points(particles, materials);
         self.sceneObject.add(self.points);
         App.scene.render();
     };
+
+    function setColor(value){
+        console.log(value)
+
+    }
 
     // data loading function
     function loadData(file){
@@ -83,7 +88,8 @@ const ParticleSystem = function() {
         drawNozzle,
         createParticleSystem,
         initialize,
-        getParticleSystems
+        getParticleSystems,
+        setColor
 
     }
 

@@ -14,15 +14,17 @@ var App = App || {};
     {
         //dropdown menu
         App.timeStep = new TimeStepsController();
-        App.timeStep.init();
+        App.timeStep.timeStepSelect();
+        App.timeStep.colorSelect()
         // create a new scene, pass options as dictionary
         App.scene = new Scene({container:"scene"});
-        App.scene.init()
+        App.scene.init();
 
         // // initialize the particle system
         App.particleSystem = new ParticleSystem();
         App.particleSystem.drawNozzle()
-        App.particleSystem.initialize('particles/2.3075.csv');
+        App.particleSystem.initialize('particles/timestep_0.csv');
+        App.particleSystem.setColor("Temperature");
 
         // //add the particle system to the scene
         App.scene.addObject( App.particleSystem.getParticleSystems());
