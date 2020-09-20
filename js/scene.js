@@ -75,7 +75,7 @@ const Scene = function(options){
         const width = window.innerWidth - 100;
         const topHeight = d3.select(".top").node().clientHeight
         const height = window.innerHeight - topHeight - 50
-        console.log(width, height)
+        // console.log(width, height)
         
         self.camera.aspect = width / height;
         self.camera.updateProjectionMatrix();

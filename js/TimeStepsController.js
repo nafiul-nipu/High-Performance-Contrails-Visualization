@@ -7,7 +7,7 @@ var App = App || {};
 
 const TimeStepsController = function(options){
     let self = {
-        steps : [2.305, 2.3075, 2.31, 2.3135, 2.315, 2.3175, 2.32,
+        steps : [2.305,2.3075, 2.31, 2.3135, 2.315, 2.3175, 2.32,
             2.3225, 2.325, 2.3275, 2.33, 2.3325, 2.335, 2.3375,
             2.34, 2.3425, 2.345, 2.3475, 2.35, 2.355, 2.36,
             2.365, 2.37, 2.375, 2.38, 2.385, 2.39, 2.395, 2.40],
@@ -55,43 +55,57 @@ const TimeStepsController = function(options){
     }
 
     function previous(){
-        console.log("previous")
-        // let file ; 
-        // let value = d3.format('.2f')($("#timesteps").val());
-        // console.log(value)
-        // for(let i = 0; i < self.steps.length ; i++){
-        //     if(value == self.steps[i]){
-        //         if(i == self.steps.length - 1){ // last step
-        //             file = d3.format('.2f')(self.steps[0])
-        //             $("#timesteps").val(self.steps[0]);
-        //         }else if(i == 0){ // first step
-        //             file = d3.format('.2f')(self.steps[self.steps.length - 1]);
-        //             $("#timesteps").val(self.steps[self.steps.length - 1]);
-        //         }else{
-        //             file = d3.format('.2f')(self.steps[i - 1])
-        //             $("#timesteps").val(self.steps[i - 1]);
-        //         }
-        //     }
-        // }
-        // console.log(file)
+        let file;
+        let value = +($("#timesteps").val());
+        let index = self.steps.indexOf(value);
+        let total = self.steps.length - 1;
+        // console.log(total % index)
+        if(index != 0){
+            file = index - 1 ;
+        }else{
+            file = total;
+        }
         
-    }
+        $("#timesteps").val(self.steps[file]);   
+        App.particleSystem.initialize('particles/timestep_'+ file +'.csv'); 
+
+        // console.log(value, file)  
+     }
+
     function next(){
-        console.log("next")
+        // console.log("next")
+        let file;
+        let value = +($("#timesteps").val());
+        let index = self.steps.indexOf(value);
+        let total = self.steps.length - 1;
+        if(index != total){
+            file = (index % total) + 1 ;
+        }else{
+            file = 0;
+        }
+        
+        $("#timesteps").val(self.steps[file]);
+        App.particleSystem.initialize('particles/timestep_'+ file +'.csv'); 
+
+        // console.log("length", self.steps.length, "index", self.steps.indexOf(value) % (self.steps.length - 1), "now", value,"next",self.steps[file],(self.steps.indexOf(value) % (self.steps.length - 1)) + 1  )
     }
 
     function selectChange(){
         // console.log(App.particleSystem)
         // console.log("hello")
-        let value = $("#timesteps").val();
-        console.log(value)
-        let file = self.steps.indexOf(value);
-        console.log(file)
+        let value = +($("#timesteps").val());
+        // console.log(value)
+        let file = self.steps.indexOf(value)
+        // console.log(file)
         App.particleSystem.initialize('particles/timestep_'+ file +'.csv'); 
         // App.contrails.loadData('particles/'+ file +'.csv')
     }
 
     function colorChange(){
+        // console.log("i am called")
+        let value = $("#colorSelect").val();
+        // console.log(value)
+        App.particleSystem.setColor(value)
 
     }
     return{

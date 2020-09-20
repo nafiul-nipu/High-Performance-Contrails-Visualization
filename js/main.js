@@ -22,20 +22,16 @@ var App = App || {};
 
         // // initialize the particle system
         App.particleSystem = new ParticleSystem();
-        App.particleSystem.drawNozzle()
-        App.particleSystem.initialize('particles/timestep_0.csv');
-        App.particleSystem.setColor("Temperature");
+        App.particleSystem.drawNozzle();
+        App.particleSystem.initialize('particles/timestep_0.csv').then(function(){
+            console.log("data loaded")
+            // App.particleSystem.init()
+        })
+        // App.particleSystem.init();
+        // // App.particleSystem.setColor("Temperature");
 
         // //add the particle system to the scene
         App.scene.addObject( App.particleSystem.getParticleSystems());
-
-        // // render the scene
-        // App.scene.render();
-
-        // App.contrails = new Contrails({container:"scene"})
-        // App.contrails.createScene();
-        // App.contrails.createNozzle();
-        // App.contrails.loadData('particles/2.305.csv')
 
     };
 
