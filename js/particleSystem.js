@@ -18,7 +18,9 @@ const ParticleSystem = function() {
         tempLegend:null,
         conLegend:null,
         tempColor:["#fff5f0","#67000d"],
-        conColor: ["#fcfbfd", "#3f007d"],
+        // conColor: ["#f7fcf5", "#00441b"],
+        // conColor: ["#f7fbff", "#08306b"],
+        conColor:["#fcfbfd", "#3f007d"],
         tempLegendText:[],
         conLegendText:[]
         // tempLegendSvg:null,
