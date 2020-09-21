@@ -14,7 +14,8 @@ const Scene = function(options){
     }
 
     function init(){
-        const width = window.innerWidth - 100;
+        console.log(d3.select("#canvas_container").node().clientWidth)
+        const width = d3.select("#canvas_container").node().clientWidth - 50;
         const topHeight = d3.select(".top").node().clientHeight
         const height = window.innerHeight - topHeight - 50
 
@@ -72,7 +73,7 @@ const Scene = function(options){
     }
 
     function resize(){
-        const width = window.innerWidth - 100;
+        const width = d3.select("#canvas_container").node().clientWidth - 50;
         const topHeight = d3.select(".top").node().clientHeight
         const height = window.innerHeight - topHeight - 50
         // console.log(width, height)

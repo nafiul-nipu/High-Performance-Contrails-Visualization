@@ -25,7 +25,8 @@ var App = App || {};
         App.particleSystem.drawNozzle();
         App.particleSystem.initialize('particles/timestep_0.csv').then(function(){
             console.log("data loaded")
-            // App.particleSystem.init()
+            App.particleSystem.createTempLegend()
+            App.particleSystem.createConLegend()
         })
         // App.particleSystem.init();
         // // App.particleSystem.setColor("Temperature");

@@ -14,20 +14,32 @@ const ParticleSystem = function() {
         tempScale:null,
         conScale:null,
         tempDomain:{},
-        conDomain:{}
+        conDomain:{},
+        tempLegend:null,
+        conLegend:null,
+        tempColor:["#fff5f0","#67000d"],
+        conColor: ["#fcfbfd", "#3f007d"],
+        tempLegendText:[],
+        conLegendText:[]
+        // tempLegendSvg:null,
+        // conLegendSvg: null
     }
 
     //create the scales
     function init(){
-        self.tempScale = d3.scaleLinear(d3.schemeReds[9])
+        self.tempScale = d3.scaleLinear(/*d3.schemeReds[9]*/)
                             .domain([self.tempDomain.min, self.tempDomain.max])
-                            .range(["#fff5f0","#67000d"]);
+                            .range(self.tempColor);
         // console.log(self.tempScale(self.tempDomain.min))
         // console.log(self.tempDomain.min)
 
         self.conScale = d3.scaleLinear(d3.schemePurples[9])
                         .domain([self.conDomain.min, self.conDomain.max])
-                        .range(["#fcfbfd", "#3f007d"])
+                        .range(self.conColor);
+
+        self.tempLegendText = [self.tempDomain.max, "Temperature", self.tempDomain.min];
+        self.conLegendText = [self.conDomain.max.toString(), "Concentration", self.conDomain.min.toString()]
+        console.log(self.conDomain.max.toString())
     }
 
     // create the containment box.
@@ -57,8 +69,8 @@ const ParticleSystem = function() {
         let particles = new THREE.Geometry();
         self.data.forEach(function(d){
             particles.vertices.push(new THREE.Vector3(d.x, d.y, d.z));
-            // let color = self.tempScale(d.temp)
-            particles.colors.push(new THREE.Color('rgb(255, 247, 236)'));
+            let color = self.tempScale(d.temp)
+            particles.colors.push(new THREE.Color(color));
         })
         if(self.points){
             self.sceneObject.remove(self.points)
@@ -124,10 +136,117 @@ const ParticleSystem = function() {
             init()
             createParticleSystem();
             let value = $("#colorSelect").val()
-            setColor(value)
+            setColor(value);
+            createTempLegendText();
+            createConLegendText();
             
         });
-    };
+    }
+
+    function createTempLegend(){
+        const width = window.innerWidth - 100;
+        const topHeight = d3.select(".top").node().clientHeight
+        const height = window.innerHeight - topHeight - 50
+
+        self.tempLegend = d3.select("#tempLegend").append("svg")
+                            .attr("width", 100)
+                            .attr("height", (height/2 - 20))
+
+        let legend = self.tempLegend.append("defs")
+                    .append("svg:linearGradient")
+                    .attr("id", "gradient")
+                    .attr("x1", "0%")
+                    .attr("y1", "100%")
+                    .attr("x2", "0%")
+                    .attr("y2", "0%")
+                    // .attr("spreadMethod", "pad");
+
+        legend.append("stop")
+            .attr("offset", "0%")
+            .attr("stop-color", self.tempColor[0])
+            // .attr("stop-opacity", 0.75);
+        
+        legend.append("stop")
+            .attr("offset", "100%")
+            .attr("stop-color", self.tempColor[1])
+            // .attr("stop-opacity", 0.75);
+
+        self.tempLegend.append("rect")
+            .attr("width", 20)
+            .attr("height", height)
+            .style("fill", "url(#gradient)")
+            // .style("opacity", 0.75)
+            // .attr("transform", "translate(0,0)");
+
+    }
+
+    function createTempLegendText(){
+        d3.selectAll('#temp-legend').remove();
+        for (let i = 0; i < 3; i++) {
+            self.tempLegend.append("text")
+                .attr('id', 'temp-legend')
+                .attr("x", 30)
+                .attr("y", 10 + 118 * i)
+                .attr("fill", "#F5F1F0")
+                .style("font-size", "11px")
+                .style("font-weight", "bold")
+                .text(self.tempLegendText[i]);
+        }
+
+    }
+
+    function createConLegend(){
+        const width = window.innerWidth - 100;
+        const topHeight = d3.select(".top").node().clientHeight
+        const height = window.innerHeight - topHeight - 50
+
+        self.conLegend = d3.select("#conLegend").append("svg")
+                            .attr("width", 200)
+                            .attr("height", (height/2 - 20))
+
+        let legend = self.conLegend.append("defs")
+                    .append("svg:linearGradient")
+                    .attr("id", "congradient")
+                    .attr("x1", "0%")
+                    .attr("y1", "100%")
+                    .attr("x2", "0%")
+                    .attr("y2", "0%")
+                    // .attr("spreadMethod", "pad");
+
+        legend.append("stop")
+            .attr("offset", "0%")
+            .attr("stop-color", self.conColor[0])
+            // .attr("stop-opacity", 0.75);
+        
+        legend.append("stop")
+            .attr("offset", "100%")
+            .attr("stop-color", self.conColor[1])
+            // .attr("stop-opacity", 0.75);
+
+        self.conLegend.append("rect")
+            .attr("width", 20)
+            .attr("height", height)
+            .style("fill", "url(#congradient)")
+            // .style("opacity", 0.75)
+            // .attr("transform", "translate(0,0)");
+
+    }
+
+    function createConLegendText(){
+        console.log(self.conLegendText)
+        d3.selectAll('#con-legend').remove();
+        for (let i = 0; i < 3; i++) {
+            self.conLegend.append("text")
+                .attr('id', 'con-legend')
+                .attr("x", 30)
+                .attr("y", 10 + 118 * i)
+                .attr("fill", "#F5F1F0")
+                .style("font-size", "10px")
+                .style("font-weight", "bold")
+                .text(self.conLegendText[i]);
+        }
+
+    }
 
     // load the data and setup the system
     function initialize(file){
@@ -146,7 +265,9 @@ const ParticleSystem = function() {
         createParticleSystem,
         initialize,
         getParticleSystems,
-        setColor
+        setColor,
+        createTempLegend,
+        createConLegend
 
     }
 
