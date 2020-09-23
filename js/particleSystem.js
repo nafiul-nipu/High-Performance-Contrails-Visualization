@@ -77,7 +77,12 @@ const ParticleSystem = function() {
         if(self.points){
             self.sceneObject.remove(self.points)
         }
-        let materials = new THREE.PointsMaterial({ size: 0.2, vertexColors:true});
+        let materials = new THREE.PointsMaterial({ 
+            size: 1, 
+            // side:THREE.DoubleSide,
+            sizeAttenuation: false,
+            vertexColors: true
+        });
         self.points = new THREE.Points(particles, materials);
         self.sceneObject.add(self.points);
         App.scene.render();
