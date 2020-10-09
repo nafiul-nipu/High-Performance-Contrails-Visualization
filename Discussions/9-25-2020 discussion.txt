@@ -1,0 +1,7 @@
+concentration - not bother much now
+particle position
+for each mesh - which particles are inside
+
+polymesh  all the information of the mesh..
+velocity also, temperature
+variable attach to a grid not a particle

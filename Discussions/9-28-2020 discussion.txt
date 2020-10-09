@@ -1,0 +1,8 @@
+cell 1 - volume - number of particles in that cell 20 - sum of all particles spherical volume / cell volume
+cell 2 - volume - 50
+
+values we know so far
+volume of each cell
+center coordinate of the cells
+coordinate of particles
+mass, diameter of particles

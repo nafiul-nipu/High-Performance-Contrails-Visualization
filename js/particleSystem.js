@@ -127,7 +127,7 @@ const ParticleSystem = function() {
                 y: parseFloat(data['Points:1']),
                 z: parseFloat(data['Points:2']),
                 temp: parseFloat(data['T']),
-                con: parseFloat(data['mass0'])/parseFloat(data['nParticle'])
+                con: (parseFloat(data['d']) * parseFloat(data['mass0']) * parseFloat(data['nParticle'])) / App.volume
             });
 
              // get temperature domain
@@ -135,8 +135,8 @@ const ParticleSystem = function() {
              self.tempDomain.max = Math.max(self.tempDomain.max || -Infinity, parseFloat(data['T']));
 
              // get the concentration domain
-             self.conDomain.min = Math.min(self.conDomain.min || Infinity, parseFloat(data['mass0'])/parseFloat(data['nParticle']));
-             self.conDomain.max = Math.max(self.conDomain.max || -Infinity, parseFloat(data['mass0'])/parseFloat(data['nParticle']));
+             self.conDomain.min = Math.min(self.conDomain.min || Infinity, (parseFloat(data['d']) * parseFloat(data['mass0']) * parseFloat(data['nParticle'])) / App.volume);
+             self.conDomain.max = Math.max(self.conDomain.max || -Infinity, (parseFloat(data['d']) * parseFloat(data['mass0']) * parseFloat(data['nParticle'])) / App.volume);
         }).then(function() {
             // console.log(self.conDomain);
             // console.log(self.tempDomain)

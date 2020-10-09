@@ -12,6 +12,8 @@ var App = App || {};
     /* Entry point of the application */
     App.start = function()
     {
+        //total volume of the mesh
+        App.volume = 9.15506;
         //dropdown menu
         App.timeStep = new TimeStepsController();
         App.timeStep.timeStepSelect();

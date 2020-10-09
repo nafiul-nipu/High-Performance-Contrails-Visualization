@@ -1,0 +1,15 @@
+concentration -
+for a  particle - we have coordinate 
+
+mesh - coordinate - cell numbers 
+
+calculate the volume of each cell = 12 cells
+
+then find which particle in which cell
+
+
+points - faces - cells (3d grid) 
+this 3D grid we want this value
+
+
+detailed information for generated mesh output

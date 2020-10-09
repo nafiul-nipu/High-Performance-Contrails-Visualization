@@ -1,0 +1,3 @@
+three js show the particles over time and color coded it by temp/concentration
+show in 2D all the time steps temp/concentration
+2D explanation of temp/concentration
